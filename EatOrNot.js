@@ -230,3 +230,18 @@ class Entity{
         }
     }
 }
+class Level{
+    constructor(){
+        this.currentLevel = 0;
+        this.latestLevel = 0;
+        this.maxLevel = 0;
+    }
+
+    setLevel(level){
+        this.currentLevel = level;
+    }
+
+    getCurrentLevel(){
+        return this.currentLevel;
+    }
+}
