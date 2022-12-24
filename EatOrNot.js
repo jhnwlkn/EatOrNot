@@ -165,3 +165,68 @@ class Entity{
         }
     }
 }
+function keyPressed(){
+    if (keyCode === RETURN) {
+        screen = 1;
+        lvl.setLevel(1);
+        map.init();
+    } else if (keyCode === 32) {
+        player.attack();
+    } 
+
+}
+
+class Peluru{
+    constructor(x, y) {
+      this.x = x;
+      this.y = y;
+    }
+    
+    show(s){
+      stroke(255, 0, 0);
+      fill(255, 0, 0);
+      circle(this.x, this.y, 3);
+      this.y -= s;
+      noFill();
+      noStroke();
+    }
+}
+
+class Entity{
+    constructor(x, y, w, h){
+        this.x = x;
+        this.y = y;
+        this.height = w;
+        this.width = h;
+        this.peluru = [];
+    }
+
+    attack(){
+        let plr = new Peluru(player.x, player.y);
+        this.peluru.push(plr);
+    }
+
+    moveRight(){
+        if(this.x < 400){    
+            this.x += 2;
+        }
+    }
+
+    moveLeft(){
+        if(this.x > 0){
+            this.x -= 2;
+        } 
+    }
+
+    moveDown(){
+        if(this.y < 700){
+            this.y += 2;
+        }
+    }
+
+    moveUp(){
+        if(this.y > 0){
+            this.y -= 2;
+        }
+    }
+}
