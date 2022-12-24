@@ -165,71 +165,93 @@ class Entity{
         }
     }
 }
-function keyPressed(){
-    if (keyCode === RETURN) {
-        screen = 1;
-        lvl.setLevel(1);
-        map.init();
-    } else if (keyCode === 32) {
-        player.attack();
-    } 
 
+class Monster extends Entity{
+    constructor(x, y, h, w) {
+        super(x, y, h, w);
+        this.life = 1;
+        this.color = [0,0,0];
+        this.effect = 0;
+        this.type = random(0,2);
+    }
+
+    moveRandom(){
+        
+    }
+
+    show(){
+        stroke(0);
+        if(this.type > 1){
+            this.effect = 1;
+            fill(0, 255, 0);
+            circle(this.x, this.y, 20);
+            noFill()
+          
+        }else{
+            this.effect = 0;
+            fill(255, 0, 0);
+            circle(this.x, this.y, 20);
+            noFill()
+        }
+        noStroke();
+        this.y += 2;
+    }
+
+    saveScore(){
+        return this.score;
+    }
 }
 
-class Peluru{
-    constructor(x, y) {
-      this.x = x;
-      this.y = y;
+class Hero extends Entity{
+    constructor(x, y, w, h) {
+        super(x, y, w, h);
+        this.life = 3;
+        this.score = 0;
     }
-    
-    show(s){
-      stroke(255, 0, 0);
-      fill(255, 0, 0);
-      circle(this.x, this.y, 3);
-      this.y -= s;
-      noFill();
-      noStroke();
+
+    show(){
+        fill(255, 100, 20);
+        ellipse(this.x, this.y, this.width, this.height);
+        noFill();
+    }
+
+    increaseScore(){
+        this.score += 10;
+    }
+
+    calculateLife(){
+        this.life -= 1;
+    }
+
+    saveScore(){
+        return this.score;
     }
 }
 
-class Entity{
-    constructor(x, y, w, h){
-        this.x = x;
-        this.y = y;
-        this.height = w;
-        this.width = h;
-        this.peluru = [];
+class Map{
+    constructor(width, height){
+        this.width = width;
+        this.height = height;
+        this.enemy = [];
     }
 
-    attack(){
-        let plr = new Peluru(player.x, player.y);
-        this.peluru.push(plr);
-    }
-
-    moveRight(){
-        if(this.x < 400){    
-            this.x += 2;
+    init(){
+        let cnv = createCanvas(this.width, this.height);
+        cnv.position(550,50);
+        background(125);
+        for(let i = 0; i < 5 ; i++){
+            let xE = random(0, 400);
+            let yE = random(-500, 0);
+            let en = new Monster(xE, yE, 10, 10, 1);
+            this.enemy.push(en)
         }
     }
 
-    moveLeft(){
-        if(this.x > 0){
-            this.x -= 2;
-        } 
-    }
+    move(){
 
-    moveDown(){
-        if(this.y < 700){
-            this.y += 2;
-        }
-    }
-
-    moveUp(){
-        if(this.y > 0){
-            this.y -= 2;
-        }
     }
 }
+
 class Level{
     constructor(){
         this.currentLevel = 0;
